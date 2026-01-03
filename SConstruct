@@ -86,7 +86,7 @@ env.Append(CCFLAGS=['-arch', env['arch'], "-isysroot", "$IOS_SDK_PATH", "-stdlib
 env.Append(CCFLAGS=['-DPTRCALL_ENABLED'])
 env.Prepend(CXXFLAGS=[
     '-DNEED_LONG_INT', '-DLIBYUV_DISABLE_NEON', 
-    '-DIOS_ENABLED', '-DUNIX_ENABLED', '-DCOREAUDIO_ENABLED'
+    '-DIOS_ENABLED', '-DUNIX_ENABLED'
 ])
 env.Append(LINKFLAGS=["-arch", env['arch'], '-isysroot', sdk_path, '-F' + sdk_path])
 
@@ -136,7 +136,7 @@ elif env['version'] == '4.0':
     else:
         env.Prepend(CXXFLAGS=[
             '-O2', '-ftree-vectorize',
-            '-DNDEBUG', '-DNS_BLOCK_ASSERTIONS=1',
+            '-DNDEBUG', '-DNS_BLOCK_ASSERTIONS=1', '-DDEBUG_ENABLED',
         ])
 
         env.Prepend(CXXFLAGS=['-fomit-frame-pointer'])            
@@ -152,10 +152,11 @@ if env['version'] == '3.x':
         'godot/platform/iphone',
     ])
 else:
-       env.Append(CPPPATH=[
+    env.Append(CPPPATH=[
         '.', 
         'godot', 
         'godot/platform/ios',
+        'godot/drivers/apple_embedded',
     ])
 
 # tweak this if you want to use different folders, or more folders, to store your source code in.
